@@ -20,9 +20,11 @@ def main():
     print('Un-comment the calls in MAIN one by one')
     print(' to run the testing code as you complete the TODOs.')
 
-    run_test_simple_t()
-    # run_test_set_colors()
-    # run_test_move_by()
+    #run_test_simple_t()
+    #run_test_set_colors()
+    #run_test_move_by()
+    T = CapitalT(rg.Point(3,2),5,5,5)
+    print(T.set_colors("blue", "white"))
     run_test_clone()
 
 
@@ -76,9 +78,12 @@ def run_test_move_by():
     little_red_t.set_colors('red', 'gray')
     little_red_t.attach_to(window)
     window.render(0.5)
+    print(little_red_t.v_rect.corner_1)
     little_red_t.move_by(0, 100)
+    print(little_red_t.v_rect.corner_1)
     window.render(0.5)
     little_red_t.move_by(0, 100)
+    print(little_red_t.v_rect.corner_1)
     window.render(0.5)
     for k in range(40):
         little_red_t.move_by(5, -2)
@@ -265,7 +270,7 @@ class CapitalT(object):
           :type dy: int
         """
         # ---------------------------------------------------------------------
-        # TODO: 6.
+        # Done: 6.
         #   READ the above specification, including the Example.
         #   Implement this method, then TEST it by:
         #     a. Un-comment the call to its test function, in main.  Run.
@@ -276,9 +281,8 @@ class CapitalT(object):
         #        Note: the pdf shows the different locations that
         #        the T moves through, but there is only one T at any moment.
         # ---------------------------------------------------------------------
-        self.h_rect = rg.Rectangle(rg.Point(self.h_rect.corner_1.x+dx, self.h_rect.corner_1.y+dy), rg.Point((self.h_rect.corner_2.x+dx), (self.h_rect.corner_2.y+dy)))
-        self.v_rect = rg.Rectangle(rg.Point(self.v_rect.corner_1.x+dx, self.v_rect.corner_1.y+dy), rg.Point((self.v_rect.corner_2.x+dx), (self.v_rect.corner_2.y+dy)))
-
+        self.h_rect.move_by(dx,dy)
+        self.v_rect.move_by(dx,dy)
 
     def clone(self):
         """
@@ -313,7 +317,9 @@ class CapitalT(object):
         # IMPORTANT RESTRICTION: You are NOT permitted to add any instance
         # variables beyond  h_rect  and  v_rect, at any point of this exercise.
         #######################################################################
-        return rg.Rectangle(self.h_rect.corner_1, self.h_rect.corner_2), rg.Rectangle(self.v_rect.corner_1, self.v_rect.corner_2)
+        newT = CapitalT(rg.Point((self.h_rect.corner_1.x + self.h_rect.corner_2.x)/2,(self.h_rect.corner_1.y+self.h_rect.corner_2.y)/2),self.h_rect.corner_2.x-self.h_rect.corner_1.x, self.v_rect.corner_1.y-self.v_rect.corner_2.y, self.h_rect.corner_1.y-self.h_rect.corner_2.y)
+        newT.set_colors(self.h_rect.fill_color,self.h_rect.outline_color)
+        return newT
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
